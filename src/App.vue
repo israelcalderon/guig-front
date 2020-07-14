@@ -1,28 +1,57 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
-  </div>
+  <main>
+    <CompNavbar
+      v-bind:header-title="headerTitle"
+      v-bind:header-subtitle="headerSubtitle"
+    />
+    <CompNotification
+      v-bind:notification="notification"
+      v-bind:notification-message="notificationMessage"
+      v-bind:notification-type="notificationType"
+      v-on:hide-notification="hideNotification"
+    />
+    <router-view
+      v-on:change-title="changeTitle($event)"
+      v-on:show-notification="showNotification($event)"
+      v-on:hide-notification="hideNotification"
+    />
+  </main>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import CompNavbar from "./components/CompNavbar.vue";
+import CompNotification from "@/components/CompNotification.vue";
 
 export default {
   name: "App",
+  data() {
+    return {
+      headerTitle: "",
+      headerSubtitle: "",
+      notification: false,
+      notificationMessage: "",
+      notificationType: ""
+    };
+  },
   components: {
-    HelloWorld
+    CompNavbar,
+    CompNotification
+  },
+  methods: {
+    changeTitle(data) {
+      this.headerTitle = data.title;
+      this.headerSubtitle = data.subtitle;
+    },
+    showNotification(data) {
+      this.notification = true;
+      this.notificationMessage = data.message;
+      this.notificationType = data.type;
+    },
+    hideNotification() {
+      this.notification = false;
+      this.notificationMessage = "";
+      this.notificationType = "";
+    }
   }
 };
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
