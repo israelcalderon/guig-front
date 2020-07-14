@@ -1,4 +1,4 @@
-const apiUrl = "http://guig_api/api/v1";
+const apiUrl = "http://127.0.0.1:8081/api/v1";
 
 function getBranches() {
   return fetch(`${apiUrl}/branches`).then(res => res.json());
